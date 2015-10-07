@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sorting Algorithm</title>
+		<meta name="author" content="Kelly Howard"/>
+		<meta name="description" content="Working through Sorting Algorithms"/>
+		<meta charset="utf-8"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	    <script>
+	    	$(document).ready(function(){
+	    		function microtime(get_as_float)
+					{
+					var unixtime_ms = (new Date).getTime();
+					    var sec = Math.floor(unixtime_ms/1000);
+					    return get_as_float ? (unixtime_ms/1000) : (unixtime_ms - (sec * 1000))/1000 + ' ' + sec;
+					}
+	            var sortingArray = [];
+	            for(var num = 1; num <= 100; num++){
+		            sortingArray.push(Math.floor(Math.random()*10001));
+				}
+	            function selection_sort(array){
+	            	for (var i=0; i < array.length; i++){
+	            		var min = array[i];
+		            	for (var j=i; j < array.length; j++) { 
+							if (min > array[j]){
+								min = array[j];
+							}
+						}
+					temp = array[i];
+						for (var k=0; k < array.length; k++){
+							if (min == array[k]){
+								array[k] = temp;
+							}
+						}
+					array[i] = min;
+					}
+	            	return array;
+	            }
+	            $("#smallest_largest").append("<div>["+selection_sort(sortingArray)+"]</div>");
+	            function selection_sort_both(array){
+	            	for (var i=0; i < array.length; i++){
+	            		var min = array[i];
+	            		var max = array[array.length-1];
+	            		for (var j = 0; j < array.length; j++){
+	            			if(array[j] < min){
+	            				min = array[j];
+	            			} else if (array[j] > max){
+	            				max = array[j];
+	            			}
+	            		}
+	            		tempMin = array[i];
+	            		tempMax = array[array.length-1];
+	            		array[i] = min;
+	            		array[array.length-1] = max;
+	            	return array;
+		            }
+	            }	
+	            microtime();
+        		$("#both_max_min").append("<div>["+selection_sort_both(sortingArray)+"]</div>");
+        		microtime();
+	        });
+	    </script>
+	</head>
+	<body>
+		<div id="smallest_largest">
+			<h2>Getting Smallest to Largest (Left -> Right):</h2>
+		</div>
+		<div id="both_max_min">
+			<h2>Getting BOTH Max and Min with swapping:</h2>
+		</div>
+	</body>
+</html>
