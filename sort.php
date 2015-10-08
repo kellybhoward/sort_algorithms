@@ -8,49 +8,58 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	</head>
 	<body>
-		<div id="smallest_largest">
-			<h2>Getting Smallest to Largest (Left -> Right):</h2>
+		<div id="selection_sort">
+			<h2>Selection Sort: Smallest to Largest (Left -> Right):</h2>
 			<?php
+				//Setting a Random Array Set of 100 Values
 	            $sortingArray = [];
 	            for($num = 1; $num <= 100; $num++){
 		            array_push($sortingArray, rand(1,10000));
 				}
+				//Selection Sort Function Declaration
 	            function selection_sort($array){
-	            	for ($i=0; $i < count($array); $i++){
-	            		$min = $array[$i];
-		            	for ($j=$i; $j < count($array); $j++) { 
-							if ($min > $array[$j]){
-								$min = $array[$j];
-							}
+	            	$size = sizeof($array);
+	            	for ($i=0; $i < $size; $i++){
+	            		$min = $i;
+		            	for ($j = $i+1; $j < $size; $j++) { 
+							if ($array[$j] < $array[$min])
+								$min = $j;
 						}
-					$temp = $array[$i];
-						for ($k=0; $k < count($array); $k++){
-							if ($min == $array[$k]){
-								$array[$k] = $temp;
-							}
-						}
-					$array[$i] = $min;
+						$temp = $array[$min];
+						$array[$min] = $array[$i];
+						$array[$i] = $temp;
 					}
 	            	return $array;
 	            }
-			   $time_start = microtime(true);
-	            $result = implode(", ", selection_sort($sortingArray));
-	            echo $result;
+
+	            //Microtime function to set start time
+			    $time_start = microtime(true);
+			    //Printing the Array with commas
+	            echo implode(", ", selection_sort($sortingArray));;
+	            //Stopping Microtime clock
 	            $time_end = microtime(true);
 			    $time = $time_end - $time_start;
+			    //Printing result of Microtime function
 			    echo "<br><br>Did sort in " . $time . " seconds\n";
 			?>
 		</div>
 		<div id="both_max_min">
-			<h2>Getting BOTH Max and Min with swapping:</h2>
+			<h2>Selection Sort: Switching BOTH Max and Min:</h2>
 			<?php
+				//Setting a Random Array Set of 100 Values
+				$sortingArray2 = [];
+	            for($num = 1; $num <= 100; $num++){
+		            array_push($sortingArray2, rand(1,10000));
+				}
+				//Selection Sort Function Declaration that uses both Min and Max
 				function selection_sort_both($array){
-	            	for ($i=0; $i < count($array); $i++){
+					$size = sizeof($array);
+	            	for ($i=0; $i < $size; $i++){
 	            		$min = $array[$i];
 						$max = $array[$i];
 						$minIndex = $i;
 						$maxIndex = $i;
-		            	for ($j=$i; $j < count($array); $j++) { 
+		            	for ($j=$i; $j < $size; $j++) { 
 							if ($min > $array[$j]){
 								$min = $array[$j];
 								$minIndex = $j;
@@ -60,7 +69,7 @@
 							}
 						}
 					$temp = $array[$i];
-						for ($k=0; $k < count($array); $k++){
+						for ($k=0; $k < $size; $k++){
 							if ($min == $array[$k]){
 								$array[$k] = $temp;
 							}
@@ -69,9 +78,11 @@
 					}
 	            	return $array;
 	            }
+	            //Microtime function to set start time
 	            $time_start = microtime(true);
-	            $result = implode(", ", selection_sort_both($sortingArray));
-	            echo $result;
+	            //Printing the Array with commas
+	            echo implode(", ", selection_sort_both($sortingArray2));
+	            //Printing result of Microtime function
 	            $time_end = microtime(true);
 			    $time = $time_end - $time_start;
 			    echo "<br><br>Did sort in " . $time . " seconds\n";
